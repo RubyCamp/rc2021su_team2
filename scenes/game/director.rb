@@ -18,12 +18,12 @@ module Game
       @suits.each do |suit|
         if suit != "god".to_sym
           1.upto(13) do |n|
-            @deck_cards << Card.new(id, rand(730) + 20, rand(390) + 10, suit, n, self)
+            @deck_cards << Card.new(id, rand(730) + 20, rand(390) + 10, suit, n, "55", self)
             id += 1
           end
         end      
       end
-      @deck_cards << Card.new(id, 30 , 30 , :god, 53, self)
+      @deck_cards << Card.new(id, 30 , 30 , :god, 53, 55, self)
       @wait = WAIT_FRAMES
       @opened_cards = []
       @player_id = 1
