@@ -28,4 +28,7 @@ cp側はランダムで選ぶ
 カードを引いた時は相手の手札の枚数を確認する
 相手の手札が０だったら勝ちor負け
 
-
+game director.rbで使う配列
+デッキ：@deck_cards
+自分の手札：@hand_cards
+相手の手札：@enemy_cards

@@ -41,13 +41,18 @@ class Card < Sprite
 		
 	end
 
+	def set_position(x,y)
+		self.x = x
+		self.y = y
+	end
+
 	def update
-		@dragging = true if Input.mouse_down?(M_RBUTTON)
-		@dragging = false if Input.mouse_release?(M_RBUTTON)
-		if @dragging && @director.opened_cards.include?(self)
-			self.x = Input.mouse_x
-			self.y = Input.mouse_y
-		end
+		#@dragging = true if Input.mouse_down?(M_RBUTTON)
+		#@dragging = false if Input.mouse_release?(M_RBUTTON)
+		#if @dragging && @director.opened_cards.include?(self)
+		#	self.x = Input.mouse_x
+		#	self.y = Input.mouse_y
+		#end
 	end
 
 	def draw

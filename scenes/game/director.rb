@@ -8,31 +8,70 @@ module Game
     def initialize
       @bg = Image.load('images/bg_game.png')
       @suits = [:spade, :club, :dia, :heart, :god]
-     
+#追加分
+# @cards = init_cards
+
       @pointer = Pointer.new(self)
     end
 
     def reload
       self.deck_cards = []
-      id = 1
+      
+      init_cards
+
+      slice_cards
+
+      @wait = WAIT_FRAMES
+      @opened_cards = []
+      @player_id = 1
+      
+    end
+
+    #デッキから手札に配るメソッド
+    def slice_cards
+
+      @hand_cards = @deck_cards.slice(0..@deck_cards.size/2)
+      @enemy_cards = @deck_cards.slice(@deck_cards.size/2..@deck_cards.size)
+      @hand_cards.each do |card|
+        if card
+          each width
+          card.set_position(100,100)
+        end
+      end
+      @enemy_cards.each do |card|
+        if card
+          card.set_position(600,600)
+        end
+      end
+
+    end
+    #シャフルメソッド完成
+    def init_cards
+      id=1
       @suits.each do |suit|
         if suit != "god".to_sym
           1.upto(13) do |n|
-            @deck_cards << Card.new(id, rand(730) + 20, rand(390) + 10, suit, n, "55", self)
+            @deck_cards << Card.new(id, Window.width/2 ,  Window.height/2 , suit, n, "55", self)
             id += 1
           end
         end      
       end
-      @deck_cards << Card.new(id, 30 , 30 , :god, 53, 55, self)
-      @wait = WAIT_FRAMES
-      @opened_cards = []
-      @player_id = 1
+      @deck_cards << Card.new(id, Window.width/2 , Window.height/2 , :god, 53, 55, self)
+      @deck_cards.shuffle
     end
+    #トラッシュ
+    #def merge_trushed
+     # @cards += @trushed
+     # @cards.shuffle!
+     # @trushed = []
+   # end
 
     def play
       Window.draw(0, 0, @bg)
       self.deck_cards.sort_by{|c| c.id }.each(&:draw)
-     
+
+      #Sprite.draw(self.hand_cards)
+
       @pointer.update
       Sprite.update(self.deck_cards)
       Sprite.check(@pointer, self.deck_cards)
