@@ -32,15 +32,15 @@ module Game
 
       @hand_cards = @deck_cards.slice(0..@deck_cards.size/2)
       @enemy_cards = @deck_cards.slice(@deck_cards.size/2..@deck_cards.size)
-      @hand_cards.each do |card|
+      @hand_cards.each_with_index do |card,index|
         if card
-          each width
-          card.set_position(100,100)
+          card.set_position(100 + index * 40,30)
         end
       end
-      @enemy_cards.each do |card|
+      @enemy_cards.each_with_index do |card,index|
+
         if card
-          card.set_position(600,600)
+          card.set_position(100 + index * 40, 600)
         end
       end
 
