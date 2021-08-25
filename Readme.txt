@@ -29,4 +29,7 @@ cp側はランダムで選ぶ
 相手の手札が０だったら勝ちor負け
 end
 
-
+game director.rbで使う配列
+デッキ：@deck_cards
+自分の手札：@hand_cards
+相手の手札：@enemy_cards
