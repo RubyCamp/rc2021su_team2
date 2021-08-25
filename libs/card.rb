@@ -1,5 +1,6 @@
 class Card < Sprite
-	attr_accessor :id, :suit, :number, :status
+	attr_accessor :id, :suit, :number
+	array = []
 	@@num = 0
 	SUIT_FONT_SIZE = 24
 	NUMBER_FONT_SIZE = 36
@@ -13,10 +14,9 @@ class Card < Sprite
 		god:{text:'G', color:C_YELLOW}
 	}
 
-	def initialize(id, x, y, suit, number, status, director)
+	def initialize(id, x, y, suit, number,  director)
 		self.id = id
 		self.suit = suit
-		self.status = status
 		self.number = number
 		@@num += 1
 		@num = @@num
@@ -60,7 +60,6 @@ class Card < Sprite
 	end
 
 	def open
-		p @num
 		if @num != 53
 			self.image = @foreground_image
 		else

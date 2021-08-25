@@ -1,6 +1,6 @@
 module Game
   class Director < DirectorBase
-    attr_accessor :deck_cards, :opened_cards
+    attr_accessor :deck_cards, :opened_cards, :hand_cards
 
 
     WAIT_FRAMES = 60
@@ -8,6 +8,7 @@ module Game
     def initialize
       @bg = Image.load('images/bg_game.png')
       @suits = [:spade, :club, :dia, :heart, :god]
+
 #追加分
 # @cards = init_cards
 
@@ -47,17 +48,23 @@ module Game
     end
     #シャフルメソッド完成
     def init_cards
+      self.hand_cards = []
       id=1
       @suits.each do |suit|
         if suit != "god".to_sym
           1.upto(13) do |n|
             @deck_cards << Card.new(id, Window.width/2 ,  Window.height/2 , suit, n, "55", self)
+       
             id += 1
           end
         end      
       end
+
       @deck_cards << Card.new(id, Window.width/2 , Window.height/2 , :god, 53, 55, self)
       @deck_cards.shuffle
+       @wait = WAIT_FRAMES
+      @opened_cards = []
+      @player_id = 1
     end
     #トラッシュ
     #def merge_trushed
@@ -67,39 +74,56 @@ module Game
    # end
 
     def play
-      Window.draw(0, 0, @bg)
+      Window.draw(0, 0, @bg)     
       self.deck_cards.sort_by{|c| c.id }.each(&:draw)
+
 
       #Sprite.draw(self.hand_cards)
 
       @pointer.update
       Sprite.update(self.deck_cards)
       Sprite.check(@pointer, self.deck_cards)
-      if @wait > 0 && @opened_cards.size == 2
+      if @wait > 0 && @opened_cards.size == 1
         @wait -= 1
         return
       end
-      if @opened_cards.size == 2
-        if judgement
-          @opened_cards.each do |c|
-            self.deck_cards.delete(c)
-            
+
+      if @player_id == 1
+        if @opened_cards.size == 1
+          @hand_cards.concat(@opened_cards)
+      
+          if isthrow? 
+            @hand_cards.each do |c|
+            self.hand_cards.delete(c)
+            end
           end
-        else
-          @opened_cards.each(&:reverse)
+
           change_player
+         @opened_cards = []
+         @wait = WAIT_FRAMES
+       end
+
+      else
+        @opend_cards = @hand_cards.sample
+        @hand_cards.delete(card)
+
+        if @opend_cards.size == 1
+          @enemy_cards.concat(@opened_cards)
+          
+          if isthrow?
+            @enemy_cards.each do |c|
+            self.enemy_cards.delete(c)
+            end
+          end
+
+          change_player
+          @opened_cards = []
+          @wait = WAIT_FRAMES
         end
-        @opened_cards = []
-        @wait = WAIT_FRAMES
       end
+    
       if self.deck_cards.size == 0
         win_director = Scene.get(:win)
-        #if @score[1] > @score[2]
-         # win_director.winner = 1
-        #elsif
-         # @score[1] < @score[2]
-          #win_director.winner = 2
-        #end
         Scene.move_to(:win)
       end
     end
@@ -111,7 +135,7 @@ module Game
     end
 
     def locked?
-      @opened_cards.size == 2 && @wait > 0
+      @opened_cards.size == 1 && @wait > 0
     end
 
     private
@@ -123,23 +147,18 @@ module Game
         @player_id = 1
       end
     end
-
-    def judgement
-      c1 = @opened_cards[0]
-      c2 = @opened_cards[1]
-      c1.number == c2.number
-    end
     
-    
-    #def draw_score
-     # y_pos = SCORE_Y
-      #@score.each do |pid, score|
-       # color = C_BLACK
-        #color = C_RED if pid == @player_id
-        #Window.draw_font(SCORE_X, y_pos, "P#{pid}: #{score}", SCORE_FONT, color: color)
-        #y_pos += SCORE_GAP
-      #end
-    #end
-    
+    #カードを捨てるメソッド
+    def isthrow?
+      if @player_id == 1
+       @comper_cards = @hand_cards
+      else
+        @comper_cards = @enemy_cards
+      end
+       @temp_cards = @comper_cards.map{|c| c.id}
+       @temp_cards.uniq
+       @temp_cards != @comper_cards.each{|c| c.id}
+      
+    end 
   end
 end
