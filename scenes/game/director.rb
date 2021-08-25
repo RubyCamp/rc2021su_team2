@@ -60,9 +60,12 @@ module Game
         end      
       end
 
+      
+
       @deck_cards << Card.new(id, Window.width/2 , Window.height/2 , :god, 53, self)
-      @deck_cards.shuffle
-       @wait = WAIT_FRAMES
+      @deck_cards.shuffle!
+      @wait = WAIT_FRAMES
+
       @opened_cards = []
       @player_id = 1
     end
