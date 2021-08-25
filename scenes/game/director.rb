@@ -2,7 +2,6 @@ module Game
   class Director < DirectorBase
     attr_accessor :deck_cards, :opened_cards, :hand_cards
 
-
     WAIT_FRAMES = 60
 
     def initialize
@@ -35,13 +34,13 @@ module Game
       @enemy_cards = @deck_cards.slice(@deck_cards.size/2..@deck_cards.size)
       @hand_cards.each_with_index do |card,index|
         if card
-          card.set_position(100 + index * 40,30)
+          card.set_position(100 + index * 20, 30)
         end
       end
       @enemy_cards.each_with_index do |card,index|
 
         if card
-          card.set_position(100 + index * 40, 600)
+          card.set_position(100 + index * 20, 600)
         end
       end
 
@@ -75,9 +74,6 @@ module Game
       Window.draw(0, 0, @bg)     
       self.deck_cards.sort_by{|c| c.id }.each(&:draw)
 
-
-      
-
       @pointer.update
       Sprite.update(self.deck_cards)
       Sprite.check(@pointer, self.deck_cards)
@@ -102,20 +98,19 @@ module Game
        end
 
       else
-        @opend_cards = @hand_cards.sample
-        @hand_cards.delete(card)
+        selected_card = @hand_cards.sample # sleced_card: card or nil
+        @hand_cards.delete(selected_card)
 
-        if @opend_cards.size == 1
-          @enemy_cards.concat(@opened_cards)
+        if selected_card != nil #nilじゃないことを証明
+          @enemy_cards.push(selected_card) #配列enemy_cardsにランダムで選択されたselected_cardを追加
           
           if isthrow?
-            @enemy_cards.each do |c|
-            self.enemy_cards.delete(c)
+            @enemy_cards.each do |c| 
+              @enemy_cards.delete(c)
             end
           end
 
           change_player
-          @opened_cards = []
           @wait = WAIT_FRAMES
         end
       end
@@ -127,7 +122,7 @@ module Game
     end
 
     def add_opened_card(card)
-      return if @opened_cards.size == 2
+      return if @opened_cards.size == 1 #カードを一枚めくる
       return if @opened_cards.include?(card)
       @opened_cards << card
     end
@@ -149,7 +144,7 @@ module Game
     #カードを捨てるメソッド
     def isthrow?
       if @player_id == 1
-       @comper_cards = @hand_cards
+        @comper_cards = @hand_cards
       else
         @comper_cards = @enemy_cards
       end
