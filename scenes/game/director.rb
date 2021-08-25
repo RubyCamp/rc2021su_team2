@@ -53,32 +53,27 @@ module Game
       @suits.each do |suit|
         if suit != "god".to_sym
           1.upto(13) do |n|
-            @deck_cards << Card.new(id, Window.width/2 ,  Window.height/2 , suit, n, "55", self)
+            @deck_cards << Card.new(id, Window.width/2 ,  Window.height/2 , suit, n, self)
        
             id += 1
           end
         end      
       end
 
-      @deck_cards << Card.new(id, Window.width/2 , Window.height/2 , :god, 53, 55, self)
+      @deck_cards << Card.new(id, Window.width/2 , Window.height/2 , :god, 53, self)
       @deck_cards.shuffle
        @wait = WAIT_FRAMES
       @opened_cards = []
       @player_id = 1
     end
-    #トラッシュ
-    #def merge_trushed
-     # @cards += @trushed
-     # @cards.shuffle!
-     # @trushed = []
-   # end
+    
 
     def play
       Window.draw(0, 0, @bg)     
       self.deck_cards.sort_by{|c| c.id }.each(&:draw)
 
 
-      #Sprite.draw(self.hand_cards)
+      
 
       @pointer.update
       Sprite.update(self.deck_cards)
