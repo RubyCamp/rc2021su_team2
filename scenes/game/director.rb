@@ -8,6 +8,7 @@ module Game
       @bg = Image.load('images/bg_game.png')
       @suits = [:spade, :club, :dia, :heart, :god]
       @bgm = Sound.new("sounds/opening.mid") #BGM選曲
+      @dici = Sound.new("sounds/se5.wav") #効果音選曲
 
 #追加分
 # @cards = init_cards
@@ -127,6 +128,7 @@ module Game
       return if @opened_cards.size == 1 #カードを一枚めくる
       return if @opened_cards.include?(card)
       @opened_cards << card
+      @dici.play
     end
 
     def locked?
