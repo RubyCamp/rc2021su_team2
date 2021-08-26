@@ -11,7 +11,7 @@ module Title
       Scene.move_to(:game) if Input.key_push?(K_SPACE)
       Window.draw(0, 0, @bg)
       draw_font_center(140, "G.G.O.D", 72, color: C_RED)
-      draw_font_center(210, "サブタイトルを入力してください", 38, color: C_RED)
+      draw_font_center(210, "選ばれし神", 38, color: C_RED)
       draw_font_center(550, "Push SPACE key to start", 38, color: C_BLUE)
     end
   end
