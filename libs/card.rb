@@ -1,6 +1,6 @@
 class Card < Sprite
-	attr_accessor :id, :suit, :number
-	array = []
+	attr_accessor :suit, :number
+	attr_reader :id
 	@@num = 0
 	SUIT_FONT_SIZE = 24
 	NUMBER_FONT_SIZE = 36
@@ -15,16 +15,14 @@ class Card < Sprite
 	}
 
 	def initialize(id, x, y, suit, number,  director)
-		self.id = id
+		@id = id
 		self.suit = suit
 		self.number = number
 		@@num += 1
 		@num = @@num
-
 		@reverse_image = Image.load('images/reverse_card.png')
 		@foreground_image = Image.load('images/foreground_card.png')
 		@godkurahashi_image = Image.load('images/godkurahashi.png')
-
 		label = SUIT_LABELS[self.suit]
 			if label != 'god'.to_sym
 				@foreground_image.draw_font(5, 5, label[:text], SUIT_FONT, label[:color])
@@ -38,21 +36,11 @@ class Card < Sprite
 			end
 		super(x, y, @reverse_image)
 		@director = director
-		
 	end
 
 	def set_position(x,y)
 		self.x = x
 		self.y = y
-	end
-
-	def update
-		#@dragging = true if Input.mouse_down?(M_RBUTTON)
-		#@dragging = false if Input.mouse_release?(M_RBUTTON)
-		#if @dragging && @director.opened_cards.include?(self)
-		#	self.x = Input.mouse_x
-		#	self.y = Input.mouse_y
-		#end
 	end
 
 	def draw
