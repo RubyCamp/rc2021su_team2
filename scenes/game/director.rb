@@ -6,9 +6,10 @@ module Game
     def initialize
       @bg = Image.load('images/bg_game.jpg')
       @suits = [:spade, :club, :dia, :heart, :god]
-
       @bgm = Sound.new("sounds/opening.mid") #BGM選曲
       @dici = Sound.new("sounds/se5.wav") #効果音選曲
+      @bgm.set_volume( 225, time=0 )
+
 
       @pointer = Pointer.new(self)
       @flag = 0

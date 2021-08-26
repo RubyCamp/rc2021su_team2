@@ -5,6 +5,7 @@ module Lose
 		def initialize
 			@bg = Image.load('images/bg_lose.png')
       @bgm = Sound.new("sounds/you_lose.wav")
+      @bgm.set_volume( 255, time=0 )
 			self.loser = nil
 		end
 

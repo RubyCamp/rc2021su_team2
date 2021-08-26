@@ -5,6 +5,7 @@ module Win
 		def initialize
 			@bg = Image.load('images/bg_win.png')
 			@bgm = Sound.new("sounds/you_win.wav")
+			@bgm.set_volume( 255, time=0 )
 			self.winner = nil
 		end
 
