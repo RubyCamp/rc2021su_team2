@@ -5,7 +5,7 @@ module Game
     WAIT_FRAMES = 60
 
     def initialize
-      @bg = Image.load('images/bg_game.png')
+      @bg = Image.load('images/bg_game.jpg')
       @suits = [:spade, :club, :dia, :heart, :god]
       @bgm = Sound.new("sounds/opening.mid") #BGM選曲
       @dici = Sound.new("sounds/se5.wav") #効果音選曲
