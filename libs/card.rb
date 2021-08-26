@@ -18,8 +18,6 @@ class Card < Sprite
 		@id = id
 		self.suit = suit
 		self.number = number
-		@@num += 1
-		@num = @@num
 		@reverse_image = Image.load('images/reverse_card.png')
 		@foreground_image = Image.load('images/foreground_card.png')
 		@godkurahashi_image = Image.load('images/godkurahashi.png')
@@ -48,7 +46,7 @@ class Card < Sprite
 	end
 
 	def open
-		if @num != 53
+		if @number != 53
 			self.image = @foreground_image
 		else
 			self.image = @godkurahashi_image

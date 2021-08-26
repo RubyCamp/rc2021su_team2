@@ -9,8 +9,6 @@ module Game
       @bgm = Sound.new("sounds/opening.mid") #BGM選曲
       @dici = Sound.new("sounds/se5.wav") #効果音選曲
       @bgm.set_volume( 225, time=0 )
-
-
       @pointer = Pointer.new(self)
       @flag = 0
     end
@@ -212,12 +210,16 @@ module Game
       if @hand_cards.size == 1
         if @hand_cards.first.suit == :god 
          win_director = Scene.get(:win)
+         self.reload
          Scene.move_to(:win)
+         @bgm.stop
         end
       end
       if @hand_cards.size == 0
         lose_director = Scene.get(:lose)
+        self.reload
         Scene.move_to(:lose)
+        @bgm.stop
       end
     end
   end
