@@ -4,8 +4,12 @@ module Game
     WAIT_FRAMES = 60
 
     def initialize
-      @bg = Image.load('images/bg_game.png')
+      @bg = Image.load('images/bg_game.jpg')
       @suits = [:spade, :club, :dia, :heart, :god]
+
+      @bgm = Sound.new("sounds/opening.mid") #BGM選曲
+      @dici = Sound.new("sounds/se5.wav") #効果音選曲
+
       @pointer = Pointer.new(self)
       @flag = 0
     end
@@ -18,6 +22,7 @@ module Game
       @opened_cards = []
       @player_id = 1
       @flag = 0
+      @bgm.play
     end
 
     #デッキから手札に配るメソッド
@@ -147,6 +152,7 @@ module Game
       return if @opened_cards.size == 1 #カードを一枚めくる
       return if @opened_cards.include?(card)
       @opened_cards << card
+      @dici.play
     end
 
     def locked?
