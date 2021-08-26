@@ -212,7 +212,7 @@ module Game
          win_director = Scene.get(:win)
          self.reload
          Scene.move_to(:win)
-         @bgm.stop
+        @bgm.stop
         end
       end
       if @hand_cards.size == 0
