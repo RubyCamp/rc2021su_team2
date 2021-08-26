@@ -7,6 +7,7 @@ module Game
     def initialize
       @bg = Image.load('images/bg_game.png')
       @suits = [:spade, :club, :dia, :heart, :god]
+      @bgm = Sound.new("sounds/opening.mid") #BGM選曲
 
 #追加分
 # @cards = init_cards
@@ -24,6 +25,7 @@ module Game
       @wait = WAIT_FRAMES
       @opened_cards = []
       @player_id = 1
+      @bgm.play
       
     end
 
