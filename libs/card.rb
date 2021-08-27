@@ -1,7 +1,6 @@
 class Card < Sprite
 	attr_accessor :suit, :number
 	attr_reader :id
-	@@num = 0
 	SUIT_FONT_SIZE = 24
 	NUMBER_FONT_SIZE = 36
 	SUIT_FONT = Font.new(SUIT_FONT_SIZE)
@@ -23,8 +22,7 @@ class Card < Sprite
 		@godkurahashi_image = Image.load('images/godkurahashi.png')
 		label = SUIT_LABELS[self.suit]
 			if label != 'god'.to_sym
-				@foreground_image.draw_font(5, 5, label[:text], SUIT_FONT, label[:color])
-				
+				@foreground_image.draw_font(5, 5, label[:text], SUIT_FONT, label[:color])		
 			end
 		
 		char = number_char(self.number)
